@@ -51,4 +51,4 @@ export const createBookValidation = [
         .isArray()
         .optional()
         .withMessage('Categories must be an array'),
-]
+];
