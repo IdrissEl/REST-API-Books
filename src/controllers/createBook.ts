@@ -11,7 +11,23 @@ export async function createBookController( req: any, res: any) {
     try {
         const { db } = req.app;
         
-        const { name, genre, price, release_date, publisher } = req.body;
+        const { 
+            name, 
+            genre, 
+            price, 
+            release_date, 
+            publisher,
+            created_at,
+            updated_at,
+            isbn,
+            description,
+            author,
+            page_count,
+            language,
+            rating,
+            cover_image,
+            categories
+        } = req.body;
 
         const existingBook = await db.collection('books').findOne({
             name: name.toLowerCase()
@@ -26,7 +42,17 @@ export async function createBookController( req: any, res: any) {
             genre,
             price,
             release_date,
-            publisher
+            publisher,
+            created_at: new Date(),
+            updated_at: new Date(),
+            isbn,
+            description,
+            author,
+            page_count,
+            language,
+            rating,
+            cover_image,
+            categories
         });
 
         if (result.acknowledged) {
