@@ -1,26 +1,17 @@
-
+import { validationResult } from 'express-validator';
 
 export async function createBookController( req: any, res: any) {
+    
+    // Validate Request
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     try {
         const { db } = req.app;
         
         const { name, genre, price, release_date, publisher } = req.body;
-
-        if (!name) {
-            return res.status(400).json({ error: 'Name is required' });
-        }
-        if (!genre) {
-            return res.status(400).json({ error: 'Genre is required' });
-        }
-        if (!price) {
-            return res.status(400).json({ error: 'Price is required' });
-        }
-        if (!release_date) {
-            return res.status(400).json({ error: 'Release Date is required' });
-        }
-        if (!publisher) {
-            return res.status(400).json({ error: 'Publisher is required' });
-        }
 
         const existingBook = await db.collection('books').findOne({
             name: name.toLowerCase()
