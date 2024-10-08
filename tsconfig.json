@@ -15,7 +15,7 @@
         "allowJs": true,
         // "checkJs": true,
 
-        "strict": false
+        "strict": true
     },
     "include": ["src"],
     "exclude": ["node_modules", "dist/*", "src/static"],

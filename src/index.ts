@@ -1,6 +1,6 @@
 // First init API
 
-import { MongoClient } from "mongodb";
+import { Mongoose } from 'mongoose';
 
 const express = require('express');
 const body = require('body-parser');
@@ -15,13 +15,11 @@ async function start() {
         // CORS
         app.use(cors());
 
-        // Mongodb connection
-        const mongo = await MongoClient.connect('mongodb://localhost:27017/books_api');
+        // Mongoose connection
+        const mongoose = new Mongoose();
+        await mongoose.connect('mongodb://localhost:27017/books_api');
 
-        // Connection to mongodb
-        await mongo.connect();
-
-        app.db = mongo.db();
+        app.db = mongoose.connection.db;
 
         // set limit on req size
         app.use(body.json({

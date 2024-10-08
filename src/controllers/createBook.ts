@@ -12,7 +12,7 @@ export async function createBookController( req: any, res: any) {
         const { db } = req.app;
         
         const { 
-            name, 
+            title, 
             genre, 
             price, 
             release_date, 
@@ -30,7 +30,7 @@ export async function createBookController( req: any, res: any) {
         } = req.body;
 
         const existingBook = await db.collection('books').findOne({
-            name: name.toLowerCase()
+            title: title.toLowerCase()
         });
 
         if (existingBook) {
@@ -38,7 +38,7 @@ export async function createBookController( req: any, res: any) {
         }
 
         const result = await db.collection('books').insertOne({
-            name: name.toLowerCase(),
+            title: title.toLowerCase(),
             genre,
             price,
             release_date,
@@ -62,6 +62,8 @@ export async function createBookController( req: any, res: any) {
         }
 
     } catch(error) {
-        res.status(500).json({ error: error.toString() });
+        if (error instanceof Error) {
+            res.status(500).json({ error: error.toString() });
+        }
     }
 }

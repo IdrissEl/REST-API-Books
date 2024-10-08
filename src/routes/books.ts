@@ -1,4 +1,5 @@
 import { createBookController } from "../controllers/createBook";
+import { deleteBookController } from "../controllers/deleteBook";
 import { getBookController } from "../controllers/getBook";
 import { getBooksController } from "../controllers/getBooks";
 import { updateBookController } from "../controllers/updateBook";
@@ -15,5 +16,6 @@ router.get('/', getBooksController);
 router.get('/:id', getBookController);
 router.post('/', createBookValidation, createBookController);
 router.patch('/:id', updateBookValidation, updateBookController);
+router.delete('/:id', deleteBookController);
 
 module.exports = router;

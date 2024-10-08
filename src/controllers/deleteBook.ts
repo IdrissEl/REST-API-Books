@@ -1,7 +1,7 @@
 import { validationResult } from 'express-validator';
 import { ObjectId } from 'mongodb';
 
-export async function updateBookController( req: any, res: any) {
+export async function deleteBookController( req: any, res: any) {
     
     // Validate Request
     const errors = validationResult(req);
@@ -18,24 +18,19 @@ export async function updateBookController( req: any, res: any) {
             return res.status(400).json({ message: 'Id does not exist!'});
         }
 
-        const book = await db.collection('books').findOne({ _id: ObjectId.createFromHexString(id) });
-
-        if (!book) {
-            return res.status(404).json({ message: 'Book not found' });
-        }
-
-        const update = req.body;
-        const updatedBook = { ...book, ...update };
-
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        // Update the book document in the database
-        await db.collection('books').updateOne({ _id: ObjectId.createFromHexString(id) }, { $set: updatedBook });
+        // Delete the book document in the database
+        const result = await db.collection('books').deleteOne({ _id: ObjectId.createFromHexString(id) });
 
-        res.status(200).json({ message: 'Book updated successfully' });
+        if (result.deletedCount === 0) {
+            return res.status(404).json({ message: 'Book does not exist' });
+        }
+
+        res.status(200).json({ message: 'Book deleted successfully' });
 
     } catch(error) {
         if (error instanceof Error) {

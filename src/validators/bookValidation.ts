@@ -1,7 +1,7 @@
 import { body } from 'express-validator';
 
 export const createBookValidation = [
-    body('name')
+    body('title')
         .custom((value) => {
             if (value.trim() === '') {
                 throw new Error('Name is required and must be a string');

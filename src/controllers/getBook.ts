@@ -26,6 +26,8 @@ export async function getBookController( req: any, res: any) {
         
 
     } catch(error) {
-        res.status(500).json({ error: error.toString() });
+        if (error instanceof Error) {
+            res.status(500).json({ error: error.toString() });
+        }
     }
 }

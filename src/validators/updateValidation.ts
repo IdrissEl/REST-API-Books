@@ -1,8 +1,8 @@
 import { body } from 'express-validator';
 
 export const updateBookValidation = [
+    body('title').isString().optional().notEmpty().withMessage('Name must be a non-empty string'),
     body('isbn').isString().optional().notEmpty().withMessage('ISBN must be a non-empty string'),
-    body('name').isString().optional().notEmpty().withMessage('Name must be a non-empty string'),
     body('description').isString().optional().notEmpty().withMessage('Description must be a non-empty string'),
     body('author').isString().optional().notEmpty().withMessage('Author must be a non-empty string'),
     body('page_count').isInt().optional().withMessage('Page count must be an integer'),
